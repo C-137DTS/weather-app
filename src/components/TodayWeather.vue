@@ -8,7 +8,7 @@
         class="weather-img"
       />
       <p class="white temp">
-        {{ data.temp }} <span class="magnitude">°C</span>
+        {{ data.temp.toFixed(1) }} <span class="magnitude">°C</span>
       </p>
       <h3 class="small-text">
         {{ data.weatherStateName }}
