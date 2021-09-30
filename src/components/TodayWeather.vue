@@ -8,10 +8,10 @@
         class="weather-img"
       />
       <p class="white temp">
-        {{ data.temp.toFixed(1) }} <span class="magnitude">°C</span>
+        {{ data.the_temp.toFixed(0) }}<span class="magnitude">°C</span>
       </p>
       <h3 class="small-text">
-        {{ data.weatherStateName }}
+        {{ data.weather_state_name }}
       </h3>
       <p class="small-text">Today • Fri, 5 Jun</p>
       <p class="small-text" id="location">
@@ -95,5 +95,6 @@ button {
   margin: 42px 0 0 42px;
   cursor: pointer;
   padding: 5px;
+  color: #e7e7eb;
 }
 </style>

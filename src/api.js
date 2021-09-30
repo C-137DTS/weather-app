@@ -1,24 +1,26 @@
-function getWoeid() {
-  const API =
-    "https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/44418/";
+function getWeather(woeid) {
+  const API = `https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`;
 
   return fetch(API)
     .then((response) => response.json())
-    .then((data) => data.consolidated_weather[0]);
+    .then((data) => {
+      return {
+        ...data.consolidated_weather[0],
+        img: data.consolidated_weather[0].weather_state_name.replace(" ", ""),
+        location: data.title,
+      };
+    });
 }
 
-// const getWeather = async (woeid) => {
-//   const API =
-//     "https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/";
-//   try {
-//     const response = await fetch(`${API}${woeid}`);
-//     const data = await response.json();
-//     return data;
-//   } catch (err) {
-//     console.error("Fetch error", err);
-//   }
-// };
+function getWoeid(latitude, longitude) {
+  const API = `https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?lattlong=${latitude},${longitude}`;
+
+  return fetch(API)
+    .then((response) => response.json())
+    .then((data) => data[0].woeid);
+}
 
 export default {
+  getWeather,
   getWoeid,
 };

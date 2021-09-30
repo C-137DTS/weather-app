@@ -21,6 +21,16 @@ export default {
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: raleway;
+}
 .container {
   background-color: #1e213a;
   width: 328px;
@@ -40,7 +50,7 @@ export default {
   font-size: 6.4rem;
   color: #e7e7eb;
   margin-top: 8px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 .magnitude {
   font-size: 2.4rem;
