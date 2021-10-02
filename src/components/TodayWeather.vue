@@ -1,21 +1,21 @@
 <template>
   <section class="highlights">
-    <button>Search for places</button>
+    <button @click="$emit('open')">Search for places</button>
     <div class="highlights-details">
       <img
-        :src="'assets/' + data.img + '.png'"
+        :src="'assets/' + weather.img + '.png'"
         alt="weather image"
         class="weather-img"
       />
       <p class="white temp">
-        {{ data.the_temp.toFixed(0) }}<span class="magnitude">°C</span>
+        {{ weather.the_temp.toFixed(0) }}<span class="magnitude">°C</span>
       </p>
       <h3 class="small-text">
-        {{ data.weather_state_name }}
+        {{ weather.weather_state_name }}
       </h3>
-      <p class="small-text">Today • Fri, 5 Jun</p>
+      <p class="small-text">Today • {{ weather.applicable_date | date }}</p>
       <p class="small-text" id="location">
-        {{ data.location }}
+        {{ weather.location }}
         <span class="location-logo"></span>
       </p>
     </div>
@@ -26,7 +26,7 @@
 export default {
   name: "TodayWeather",
   props: {
-    data: {
+    weather: {
       type: Object,
       default: () => {},
     },

@@ -1,6 +1,12 @@
 <template>
-  <div class="app" v-if="loading === false">
-    <today-weather :data="weatherInfo" />
+  <div class="app">
+    <browser
+      :left="openBrowser"
+      :history="history"
+      @close="toogleBrowser"
+      @search="searchLocation"
+    />
+    <today-weather :weather="weatherInfo" v-on:open="toogleBrowser" />
     <main>
       <h2 class="title">Today's Highlights</h2>
       <div class="today-highlights">
@@ -28,15 +34,25 @@ import WindStatus from "@/components/WindStatus";
 import Humidity from "@/components/Humidity";
 import PxFooter from "@/components/PxFooter";
 import BasicCard from "@/components/BasicCard";
+import Browser from "@/components/Browser";
 import api from "@/api.js";
 
 export default {
   name: "Home",
-  components: { TodayWeather, WindStatus, Humidity, PxFooter, BasicCard },
+  components: {
+    TodayWeather,
+    WindStatus,
+    Humidity,
+    PxFooter,
+    BasicCard,
+    Browser,
+  },
   data() {
     return {
       loading: true,
       weatherInfo: {},
+      openBrowser: false,
+      history: [],
     };
   },
 
@@ -50,6 +66,21 @@ export default {
     },
     error(err) {
       console.warn(err);
+    },
+    toogleBrowser() {
+      this.openBrowser = !this.openBrowser;
+    },
+    searchLocation(query) {
+      api
+        .getLocationWoeid(query.toLowerCase())
+        .then((woeid) => api.getWeather(woeid))
+        .then((currentWeather) => {
+          this.toogleBrowser();
+          this.weatherInfo = { ...currentWeather };
+          if (!this.history.includes(query)) {
+            this.history.push(query);
+          }
+        });
     },
   },
 
