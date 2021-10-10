@@ -35,7 +35,7 @@ button {
   text-align: left;
   padding: 0 0 0 8px;
   font-size: 0.8rem;
-  color: #E7E7EB;
+  color: #e7e7eb;
   cursor: pointer;
   margin-top: 12px;
 }

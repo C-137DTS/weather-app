@@ -1,13 +1,22 @@
 <template>
-  <div class="app">
-    <browser
-      :left="openBrowser"
-      :history="history"
-      @close="toogleBrowser"
-      @search="searchLocation"
-    />
-    <today-weather :weather="weatherInfo" v-on:open="toogleBrowser" />
-    <main>
+  <div class="app" :style="loading ? 'height: 100vh' : 'height: auto'">
+    <dot-loader
+      :color="'#e7e7eb'"
+      :size="100"
+      :loading="loading"
+      :margin="'0 8px'"
+    >
+    </dot-loader>
+    <div class="todayWeather-container" v-if="loading === false">
+      <browser
+        :left="openBrowser"
+        :history="history"
+        @close="toogleBrowser"
+        @search="searchLocation"
+      />
+      <today-weather :weather="weatherInfo" v-on:open="toogleBrowser" />
+    </div>
+    <main v-if="loading === false">
       <h2 class="title">Today's Highlights</h2>
       <div class="today-highlights">
         <wind-status :wind-speed="weatherInfo.wind_speed" />
@@ -49,10 +58,10 @@ export default {
   },
   data() {
     return {
-      loading: true,
       weatherInfo: {},
       openBrowser: false,
       history: [],
+      loading: true,
     };
   },
 
@@ -62,7 +71,10 @@ export default {
       api
         .getWoeid(crd.latitude, crd.longitude)
         .then((woeid) => api.getWeather(woeid))
-        .then((currentWeather) => (this.weatherInfo = { ...currentWeather }));
+        .then((currentWeather) => {
+          this.weatherInfo = { ...currentWeather };
+          this.loading = false;
+        });
     },
     error(err) {
       console.warn(err);
@@ -71,6 +83,7 @@ export default {
       this.openBrowser = !this.openBrowser;
     },
     searchLocation(query) {
+      this.loading = true;
       api
         .getLocationWoeid(query.toLowerCase())
         .then((woeid) => api.getWeather(woeid))
@@ -80,13 +93,13 @@ export default {
           if (!this.history.includes(query)) {
             this.history.push(query);
           }
+          this.loading = false;
         });
     },
   },
 
   created() {
     navigator.geolocation.getCurrentPosition(this.success, this.error);
-    this.loading = false;
   },
 };
 </script>
@@ -107,6 +120,9 @@ main {
   width: 100%;
   height: auto;
   display: flex;
+  background: #100e1d;
+  justify-content: center;
+  align-items: center;
 }
 .today-highlights {
   width: 70%;
@@ -120,5 +136,9 @@ main {
   font-size: 2.2rem;
   color: #e7e7eb;
   margin: 20px 0 0 160px;
+}
+.todayWeather-container {
+  width: 20%;
+  height: auto;
 }
 </style>

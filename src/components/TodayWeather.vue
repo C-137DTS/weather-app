@@ -3,7 +3,7 @@
     <button @click="$emit('open')">Search for places</button>
     <div class="highlights-details">
       <img
-        :src="'assets/' + weather.img + '.png'"
+        :src="`assets/${weather.weather_state_name.replace(' ', '')}.png`"
         alt="weather image"
         class="weather-img"
       />
@@ -54,7 +54,7 @@ html {
 }
 
 .highlights {
-  width: 20%;
+  width: 100%;
   height: 100vh;
   background-color: #1e213a;
   position: relative;

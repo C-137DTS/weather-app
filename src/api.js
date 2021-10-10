@@ -6,7 +6,6 @@ function getWeather(woeid) {
     .then((data) => {
       return {
         ...data.consolidated_weather[0],
-        img: data.consolidated_weather[0].weather_state_name.replace(" ", ""),
         location: data.title,
       };
     });
