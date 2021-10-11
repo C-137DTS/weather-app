@@ -1,6 +1,11 @@
 <template>
   <section class="highlights">
-    <button @click="$emit('open')">Search for places</button>
+    <div class="actions">
+      <button @click="$emit('open')">Search for places</button>
+      <button @click="$emit('currentWeather')" class="current-weather">
+        <img class="target" src="assets/target.svg" alt="target" />
+      </button>
+    </div>
     <div class="highlights-details">
       <img
         :src="`assets/${weather.weather_state_name.replace(' ', '')}.png`"
@@ -92,9 +97,28 @@ button {
   height: 30px;
   background-color: #6e707a;
   border: 0px;
-  margin: 42px 0 0 42px;
   cursor: pointer;
   padding: 5px;
   color: #e7e7eb;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  width: 80%;
+  margin: 0 auto;
+  padding: 48px 0 0 0;
+}
+.current-weather {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+}
+.target {
+  width: 20px;
+  height: 20px;
 }
 </style>

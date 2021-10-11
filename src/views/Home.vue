@@ -14,7 +14,11 @@
         @close="toogleBrowser"
         @search="searchLocation"
       />
-      <today-weather :weather="weatherInfo" v-on:open="toogleBrowser" />
+      <today-weather
+        :weather="weatherInfo"
+        v-on:open="toogleBrowser"
+        @currentWeather="searchCurrentWeather"
+      />
     </div>
     <main v-if="loading === false">
       <h2 class="title">Today's Highlights</h2>
@@ -67,6 +71,7 @@ export default {
 
   methods: {
     success(pos) {
+      this.loading = true;
       const crd = pos.coords;
       api
         .getWoeid(crd.latitude, crd.longitude)
@@ -96,10 +101,13 @@ export default {
           this.loading = false;
         });
     },
+    searchCurrentWeather() {
+      navigator.geolocation.getCurrentPosition(this.success, this.error);
+    },
   },
 
   created() {
-    navigator.geolocation.getCurrentPosition(this.success, this.error);
+    this.searchCurrentWeather();
   },
 };
 </script>
@@ -128,7 +136,7 @@ main {
   width: 70%;
   margin: 0 auto 20px auto;
   display: grid;
-  grid-template-columns: repeat(2, 329px);
+  grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
   grid-gap: 40px 100px;
 }
@@ -140,5 +148,48 @@ main {
 .todayWeather-container {
   width: 20%;
   height: auto;
+}
+
+@media (max-width: 1212px) {
+  .today-highlights,
+  .title {
+    margin-left: 100px;
+  }
+}
+@media (max-width: 1126px) {
+  .today-highlights,
+  .title {
+    margin-left: 80px;
+  }
+}
+@media (max-width: 1118px) {
+  .today-highlights,
+  .title {
+    margin-left: 60px;
+  }
+}
+@media (max-width: 1062px) {
+  .today-highlights,
+  .title {
+    margin-left: 40px;
+  }
+}
+@media (max-width: 1027px) {
+  .todayWeather-container {
+    width: 100vw;
+    height: auto;
+  }
+  .app {
+    flex-wrap: wrap;
+  }
+  main {
+    margin-top: 80px;
+    width: 100%;
+  }
+  .today-highlights {
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(4, auto);
+    overflow: unset;
+  }
 }
 </style>

@@ -41,7 +41,7 @@ html {
 }
 .container {
   background-color: #1e213a;
-  width: 328px;
+  width: 100%;
   height: 210px;
   display: flex;
   flex-direction: column;
