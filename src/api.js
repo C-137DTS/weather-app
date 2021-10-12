@@ -3,12 +3,7 @@ function getWeather(woeid) {
 
   return fetch(API)
     .then((response) => response.json())
-    .then((data) => {
-      return {
-        ...data.consolidated_weather[0],
-        location: data.title,
-      };
-    });
+    .then((data) => data);
 }
 
 function getWoeid(latitude, longitude) {

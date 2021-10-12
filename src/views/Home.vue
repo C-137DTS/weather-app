@@ -21,18 +21,30 @@
       />
     </div>
     <main v-if="loading === false">
+      <div class="future-weather">
+        <weather-card
+          v-for="(day, i) in weatherInfo.consolidated_weather.slice(1)"
+          :min="day.min_temp"
+          :max="day.max_temp"
+          :img="day.weather_state_name"
+          :key="day.id"
+          :aplicable_date="i === 0 ? 'Tomorrow' : day.applicable_date"
+        />
+      </div>
       <h2 class="title">Today's Highlights</h2>
       <div class="today-highlights">
-        <wind-status :wind-speed="weatherInfo.wind_speed" />
-        <humidity :humidity="weatherInfo.humidity" />
+        <wind-status
+          :wind-speed="weatherInfo.consolidated_weather[0].wind_speed"
+        />
+        <humidity :humidity="weatherInfo.consolidated_weather[0].humidity" />
         <basic-card
           name="Visibility"
-          :number="weatherInfo.visibility"
+          :number="weatherInfo.consolidated_weather[0].visibility"
           magnitude="miles"
         />
         <basic-card
           name="Air Pressure"
-          :number="weatherInfo.air_pressure"
+          :number="weatherInfo.consolidated_weather[0].air_pressure"
           magnitude="mb"
         />
       </div>
@@ -48,6 +60,7 @@ import Humidity from "@/components/Humidity";
 import PxFooter from "@/components/PxFooter";
 import BasicCard from "@/components/BasicCard";
 import Browser from "@/components/Browser";
+import WeatherCard from "@/components/WeatherCard";
 import api from "@/api.js";
 
 export default {
@@ -59,6 +72,7 @@ export default {
     PxFooter,
     BasicCard,
     Browser,
+    WeatherCard,
   },
   data() {
     return {
@@ -99,6 +113,10 @@ export default {
             this.history.push(query);
           }
           this.loading = false;
+        })
+        .catch((err) => {
+          this.$router.push("/error404");
+          console.warn(err);
         });
     },
     searchCurrentWeather() {
@@ -143,11 +161,19 @@ main {
 .title {
   font-size: 2.2rem;
   color: #e7e7eb;
-  margin: 20px 0 0 160px;
+  margin: 80px 0 0 160px;
 }
 .todayWeather-container {
   width: 20%;
   height: auto;
+}
+.future-weather {
+  width: 70%;
+  margin: 80px auto;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 @media (max-width: 1212px) {

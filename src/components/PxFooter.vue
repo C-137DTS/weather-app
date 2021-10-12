@@ -26,7 +26,7 @@ html {
   font-family: raleway;
 }
 .footer {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   text-align: center;
   color: #a09fb1;
   margin: 80px 0 20px 0;

@@ -8,19 +8,25 @@
     </div>
     <div class="highlights-details">
       <img
-        :src="`assets/${weather.weather_state_name.replace(' ', '')}.png`"
+        :src="`assets/${weather.consolidated_weather[0].weather_state_name.replace(
+          ' ',
+          ''
+        )}.png`"
         alt="weather image"
         class="weather-img"
       />
       <p class="white temp">
-        {{ weather.the_temp.toFixed(0) }}<span class="magnitude">°C</span>
+        {{ weather.consolidated_weather[0].the_temp.toFixed(0)
+        }}<span class="magnitude">°C</span>
       </p>
       <h3 class="small-text">
-        {{ weather.weather_state_name }}
+        {{ weather.consolidated_weather[0].weather_state_name }}
       </h3>
-      <p class="small-text">Today • {{ weather.applicable_date | date }}</p>
+      <p class="small-text">
+        Today • {{ weather.consolidated_weather[0].applicable_date | date }}
+      </p>
       <p class="small-text" id="location">
-        {{ weather.location }}
+        {{ weather.title }}
         <span class="location-logo"></span>
       </p>
     </div>
