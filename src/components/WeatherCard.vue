@@ -11,10 +11,10 @@
     />
     <div class="temps">
       <p class="futureWeather__card--temperature">
-        {{ min.toFixed(1) }}<span>°C</span>
+        {{ min.toFixed(1) }}<span>{{ celsius ? "°C" : "°F" }}</span>
       </p>
-      <p class="futureWeather__card--temperature">
-        {{ max.toFixed(1) }}<span>°C</span>
+      <p class="futureWeather__card--temperature max-temp">
+        {{ max.toFixed(1) }}<span>{{ celsius ? "°C" : "°F" }}</span>
       </p>
     </div>
   </div>
@@ -39,6 +39,10 @@ export default {
     max: {
       type: Number,
       default: 0,
+    },
+    celsius: {
+      type: Boolean,
+      default: true,
     },
   },
 };
@@ -78,5 +82,8 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0 8px;
+}
+.max-temp {
+  color: #a09fb1;
 }
 </style>

@@ -16,11 +16,17 @@
       />
       <today-weather
         :weather="weatherInfo"
+        :celsius="celsius"
         v-on:open="toogleBrowser"
         @currentWeather="searchCurrentWeather"
       />
     </div>
     <main v-if="loading === false">
+      <degrees
+        :celsius="celsius"
+        @fahrenheit="convertToFahrenheit"
+        @celsius="convertToCelsius"
+      />
       <div class="future-weather">
         <weather-card
           v-for="(day, i) in weatherInfo.consolidated_weather.slice(1)"
@@ -29,6 +35,7 @@
           :img="day.weather_state_name"
           :key="day.id"
           :aplicable_date="i === 0 ? 'Tomorrow' : day.applicable_date"
+          :celsius="celsius"
         />
       </div>
       <h2 class="title">Today's Highlights</h2>
@@ -61,6 +68,7 @@ import PxFooter from "@/components/PxFooter";
 import BasicCard from "@/components/BasicCard";
 import Browser from "@/components/Browser";
 import WeatherCard from "@/components/WeatherCard";
+import Degrees from "@/components/Degrees";
 import api from "@/api.js";
 
 export default {
@@ -73,6 +81,7 @@ export default {
     BasicCard,
     Browser,
     WeatherCard,
+    Degrees,
   },
   data() {
     return {
@@ -80,6 +89,7 @@ export default {
       openBrowser: false,
       history: [],
       loading: true,
+      celsius: true,
     };
   },
 
@@ -103,6 +113,7 @@ export default {
     },
     searchLocation(query) {
       this.loading = true;
+      this.celsius = true;
       api
         .getLocationWoeid(query.toLowerCase())
         .then((woeid) => api.getWeather(woeid))
@@ -120,7 +131,34 @@ export default {
         });
     },
     searchCurrentWeather() {
+      this.celsius = true;
       navigator.geolocation.getCurrentPosition(this.success, this.error);
+    },
+    convertToFahrenheit() {
+      if (!this.celsius) return;
+
+      this.weatherInfo.consolidated_weather.map((weather) => {
+        weather.the_temp = this.celsiusToFarenheit(weather.the_temp);
+        weather.min_temp = this.celsiusToFarenheit(weather.min_temp);
+        weather.max_temp = this.celsiusToFarenheit(weather.max_temp);
+      });
+      this.celsius = false;
+    },
+    celsiusToFarenheit(n) {
+      return n * 1.8 + 32;
+    },
+    convertToCelsius() {
+      if (this.celsius) return;
+
+      this.weatherInfo.consolidated_weather.map((weather) => {
+        weather.the_temp = this.fahrenheitToCelsius(weather.the_temp);
+        weather.min_temp = this.fahrenheitToCelsius(weather.min_temp);
+        weather.max_temp = this.fahrenheitToCelsius(weather.max_temp);
+      });
+      this.celsius = true;
+    },
+    fahrenheitToCelsius(n) {
+      return (n - 32) / 1.8;
     },
   },
 
@@ -141,6 +179,7 @@ main {
   height: 100vh;
   background-color: #100e1d;
   overflow-y: scroll;
+  position: relative;
 }
 .app {
   width: 100%;

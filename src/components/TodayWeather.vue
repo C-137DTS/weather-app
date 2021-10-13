@@ -17,7 +17,7 @@
       />
       <p class="white temp">
         {{ weather.consolidated_weather[0].the_temp.toFixed(0)
-        }}<span class="magnitude">°C</span>
+        }}<span class="magnitude">{{ celsius ? "°C" : "°F" }}</span>
       </p>
       <h3 class="small-text">
         {{ weather.consolidated_weather[0].weather_state_name }}
@@ -40,6 +40,10 @@ export default {
     weather: {
       type: Object,
       default: () => {},
+    },
+    celsius: {
+      type: Boolean,
+      default: true,
     },
   },
 };
