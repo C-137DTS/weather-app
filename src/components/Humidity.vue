@@ -51,6 +51,7 @@ html {
   align-items: center;
   margin-top: 20px;
   padding: 20px 0;
+  min-width: 280px;
 }
 .font-white {
   color: #e7e7eb;

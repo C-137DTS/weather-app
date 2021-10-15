@@ -40,6 +40,7 @@ html {
   align-items: center;
   margin-top: 20px;
   padding: 20px 0;
+  min-width: 280px;
 }
 .normal-text {
   font-size: 1.6rem;

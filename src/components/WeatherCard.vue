@@ -59,6 +59,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 }
 .futureWeather__card--day {
   color: #e7e7eb;

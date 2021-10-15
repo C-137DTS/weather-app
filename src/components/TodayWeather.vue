@@ -131,4 +131,13 @@ button {
   width: 20px;
   height: 20px;
 }
+
+@media (max-width: 1027px) {
+  .highlights {
+    height: auto;
+  }
+  #location {
+    margin-bottom: 20px;
+  }
+}
 </style>

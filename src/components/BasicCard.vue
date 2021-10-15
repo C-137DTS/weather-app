@@ -48,6 +48,7 @@ html {
   align-items: center;
   margin-top: 20px;
   padding: 20px 0;
+  min-width: 280px;
 }
 .name {
   font-size: 1.6rem;

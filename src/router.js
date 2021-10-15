@@ -17,6 +17,7 @@ export default new VueRouter({
       path: "/error404",
       name: "Error404",
       component: Error404,
+      meta: { title: 'About - MyApp' },
     },
   ],
 });

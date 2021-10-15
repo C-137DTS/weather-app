@@ -26,6 +26,7 @@
         :celsius="celsius"
         @fahrenheit="convertToFahrenheit"
         @celsius="convertToCelsius"
+        class="degrees"
       />
       <div class="future-weather">
         <weather-card
@@ -36,6 +37,7 @@
           :key="day.id"
           :aplicable_date="i === 0 ? 'Tomorrow' : day.applicable_date"
           :celsius="celsius"
+          class="future-card"
         />
       </div>
       <h2 class="title">Today's Highlights</h2>
@@ -216,29 +218,24 @@ main {
 }
 
 @media (max-width: 1212px) {
-  .today-highlights,
+  .today-highlights {
+    margin: 0 auto;
+  }
   .title {
-    margin-left: 100px;
+    margin: 80px 0 0 0;
+    text-align: center;
   }
 }
 @media (max-width: 1126px) {
-  .today-highlights,
-  .title {
-    margin-left: 80px;
+  .future-weather {
+    width: 100%;
+    padding: 0 80px;
+  }
+  .degrees {
+    right: 80px;
   }
 }
-@media (max-width: 1118px) {
-  .today-highlights,
-  .title {
-    margin-left: 60px;
-  }
-}
-@media (max-width: 1062px) {
-  .today-highlights,
-  .title {
-    margin-left: 40px;
-  }
-}
+
 @media (max-width: 1027px) {
   .todayWeather-container {
     width: 100vw;
@@ -248,13 +245,28 @@ main {
     flex-wrap: wrap;
   }
   main {
-    margin-top: 80px;
+    margin-top: 0px;
     width: 100%;
+    overflow-y: unset;
   }
   .today-highlights {
-    grid-template-columns: 100%;
+    grid-template-columns: repeat(2, 300px);
+    grid-template-rows: repeat(2, auto);
+    justify-content: center;
+  }
+  .future-weather {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .future-card {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 725px) {
+  .today-highlights {
+    grid-template-columns: 300px;
     grid-template-rows: repeat(4, auto);
-    overflow: unset;
   }
 }
 </style>
