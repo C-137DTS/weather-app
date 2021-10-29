@@ -1,5 +1,5 @@
 # weather
-# Go to [this link](https://cors-anywhere.herokuapp.com/corsdemo "this link") for avoid problems with CORS
+# Go to [this link](https://cors-anywhere.herokuapp.com/corsdemo "this link") to avoid problems with CORS
 
 ## Project setup
 ```
